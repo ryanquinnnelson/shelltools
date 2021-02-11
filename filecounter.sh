@@ -14,6 +14,7 @@ usage: filecounter [-d directory] [-h]
 
 Outputs disk usage and name of each file nested recursively in a given directory.
 If no directory is provided, uses current directory as the starting point.
+Does not include hidden files or hidden directories.
 EOF
 exit
       ;;
@@ -44,7 +45,9 @@ rm "$tmpfile"
 
 # get disk usage for each nested file in the given directory
 # use current working directory as default value if no directory was supplied
-find ${directory:-$(echo $PWD)} -type f -exec du -a {} + >&3
+# skips hidden directories and hidden files
+find ${directory:-$(echo $PWD)} -not -path '*/\.*' -type f -exec du -a {} + >&3
+
 
 # process usage list
 while read -r line; do
