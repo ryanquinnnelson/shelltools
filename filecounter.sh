@@ -46,7 +46,7 @@ rm "$tmpfile"
 # get disk usage for each nested file in the given directory
 # use current working directory as default value if no directory was supplied
 # skips hidden directories and hidden files
-find ${directory:-$(echo $PWD)} -not -path '*/\.*' -type f -exec du -a {} + >&3
+find ${directory:-$(echo $PWD)} -not -path '*/\.*' -type f -exec du -s {} + >&3
 
 
 # process usage list
