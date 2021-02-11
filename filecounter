@@ -1,27 +1,38 @@
 #!/usr/bin/env bash
 
-description=$(cat << EOF
-usage: filecounter [-d directory] [-h]
 
-Outputs disk usage and name of each file nested recursively in a given 
-directory. If no directory is provided, uses current directory as the 
+usage(){
+  echo 'usage: filecounter [-d dirname] [-h]'
+}
+
+description(){
+  d=$(cat << EOF
+
+Outputs disk usage and name of each file nested recursively in a given
+directory. If no directory is provided, uses current directory as the
 starting point. Does not include hidden files or hidden directories.
-EOF)
 
+Output format is usage|filename.
+EOF
+)
+  echo "$d"
+}
 
 # read in arguments
 # source: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
-while getopts ":h :d:" opt; do
+while getopts ":hd:" opt; do
   case ${opt} in
     d )
       directory=$OPTARG
       ;;
-    h ) echo "${description}"
+    h )
+      usage
+      description
       exit
       ;;
     \? )
       echo "unknown option: $OPTARG" 1>&2
-      echo "usage: filecounter [-d directory] [-h]"
+      usage
       exit
       ;;
     : )
@@ -37,24 +48,24 @@ shift $((OPTIND -1))
 # source: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
 # source: https://stackoverflow.com/questions/55435352/bad-file-descriptor-when-reading-from-fd-3-pointing-to-a-temp-file
 # 2 file pointers are required because &3 is at the end of the file after the previous write
-tmpfile=$(mktemp /tmp/filecounter-filelist.XXXXXX)
-exec 3>"$tmpfile"   # create file pointer for writing to file
-exec 4<"$tmpfile"   # create file pointer for reading from file
-rm "$tmpfile"
+tmp_file=$(mktemp /tmp/filecounter-filelist.XXXXXX)
+exec 3>"$tmp_file"   # create file pointer for writing to file
+exec 4<"$tmp_file"   # create file pointer for reading from file
+rm "$tmp_file"
 
 
 # get disk usage for each nested file in the given directory
 # use current working directory as default value if no directory was supplied
 # skip hidden directories and hidden files
-find ${directory:-$(echo $PWD)} -not -path '*/\.*' -type f -exec du -s {} + >&3
+find "${directory:-"$PWD"}" -not -path '*/\.*' -type f -exec du -s {} + >&3
 
 
 # process usage list
 while read -r line; do
 
   # parse file size and filename
-  fsize=$(echo ${line} | cut -d' ' -f1)
-  fname=$(echo ${line} | cut -d' ' -f2-100)
+  fsize=$(echo "${line}" | cut -d' ' -f1)
+  fname=$(echo "${line}" | cut -d' ' -f2-100)
 
   # output file size and basename
   bname=$(basename "$fname")
