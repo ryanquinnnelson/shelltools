@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+description=$(cat << EOF
+usage: filecounter [-d directory] [-h]
+
+Outputs disk usage and name of each file nested recursively in a given 
+directory. If no directory is provided, uses current directory as the 
+starting point. Does not include hidden files or hidden directories.
+EOF)
+
+
 # read in arguments
 # source: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
 while getopts ":h :d:" opt; do
@@ -7,16 +16,8 @@ while getopts ":h :d:" opt; do
     d )
       directory=$OPTARG
       ;;
-
-    h )
-cat << EOF
-usage: filecounter [-d directory] [-h]
-
-Outputs disk usage and name of each file nested recursively in a given directory.
-If no directory is provided, uses current directory as the starting point.
-Does not include hidden files or hidden directories.
-EOF
-exit
+    h ) echo "${description}"
+      exit
       ;;
     \? )
       echo "unknown option: $OPTARG" 1>&2
@@ -32,7 +33,6 @@ done
 shift $((OPTIND -1))
 
 
-
 # create temporary file
 # source: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
 # source: https://stackoverflow.com/questions/55435352/bad-file-descriptor-when-reading-from-fd-3-pointing-to-a-temp-file
@@ -45,14 +45,14 @@ rm "$tmpfile"
 
 # get disk usage for each nested file in the given directory
 # use current working directory as default value if no directory was supplied
-# skips hidden directories and hidden files
+# skip hidden directories and hidden files
 find ${directory:-$(echo $PWD)} -not -path '*/\.*' -type f -exec du -s {} + >&3
 
 
 # process usage list
 while read -r line; do
 
-  # extract file size and filename
+  # parse file size and filename
   fsize=$(echo ${line} | cut -d' ' -f1)
   fname=$(echo ${line} | cut -d' ' -f2-100)
 
