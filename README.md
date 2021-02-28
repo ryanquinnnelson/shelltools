@@ -1,8 +1,11 @@
 # bash-example
-Code sample using Bash scripting
+Code samples using Bash scripting
+
+### Summary
+This project collects scripts which were developed to showcase a command of Bash scripting or to perform useful everyday tasks.
 
 
-## Concept List
+### Concept List of things to be included
 - Argument parsing
 - Exception handling
 - Functions
@@ -11,11 +14,11 @@ Code sample using Bash scripting
 - Shebang
 
 
-## Helpful Guides
+### Helpful Guides
 - https://tldp.org/LDP/Bash-Beginners-Guide/html/index.html
 
 
-## Ideas for Sample Scripts
+### Ideas for Sample Scripts
 - File size counter
 - Text search script
 
