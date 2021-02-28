@@ -5,7 +5,7 @@ Code samples using Bash scripting
 This project collects scripts which were developed to showcase a command of Bash scripting or to perform useful everyday tasks.
 
 
-### Concept List of things to be included
+#### List of concepts to be included
 - Argument parsing
 - Exception handling
 - Functions
@@ -14,11 +14,11 @@ This project collects scripts which were developed to showcase a command of Bash
 - Shebang
 
 
-### Helpful Guides
+#### Helpful Guides
 - https://tldp.org/LDP/Bash-Beginners-Guide/html/index.html
 
 
-### Ideas for Sample Scripts
+#### Ideas for Sample Scripts
 - File size counter
 - Text search script
 
