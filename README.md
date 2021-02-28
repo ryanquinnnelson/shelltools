@@ -1,9 +1,5 @@
-# bash-example
-Code samples using Bash scripting
-
-### Summary
-This project collects scripts which were developed to showcase a command of Bash scripting or to perform useful everyday tasks.
-
+# bash-tools
+Collection of scripts developed to showcase a command of Bash scripting or perform useful every tasks
 
 #### List of concepts to be included
 - Argument parsing
