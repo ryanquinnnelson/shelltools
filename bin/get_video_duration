@@ -22,13 +22,14 @@
 
 # Steps
 # 1. Find files that are not hidden or in hidden directories.
-# 2. For each file, print the filename and a vertical bar.
+# 2. For each file, print the filename.
 # 3. Use exiftool to calculate the normal duration.
-# 4. Replace the formatting of exiftool with vertical bar.
+# 4. Replace excess output from exiftool with vertical bar.
+#    Assumes exiftool output follows a specific pattern.
 
 cd "$1"
 find "$PWD" -type f -not -path '*/\.*' -exec sh -c \
-"printf \"{}|\"; \
+"printf \"{}\"; \
 exiftool \"{}\"  \
 | grep ^Duration \
-| sed 's/: /|/'" \;
+| sed 's/Duration                        : /|/'" \;
