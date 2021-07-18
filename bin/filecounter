@@ -13,10 +13,19 @@ directory. If no directory is provided, uses current directory as the
 starting point. Does not include hidden files or hidden directories.
 
 Output format is usage|filename.
+
+Example
+
+%  filecounter -d example 
+>> 64	example/filetwo.csv|filetwo.csv
+>> 8	example/fileone.txt|fileone.txt
+
+
 EOF
 )
   echo "$d"
 }
+
 
 # read in arguments
 # source: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
@@ -30,18 +39,20 @@ while getopts ":hd:" opt; do
       description
       exit
       ;;
-    \? )
+    ? )
       echo "unknown option: $OPTARG" 1>&2
       usage
-      exit
-      ;;
-    : )
-      echo "invalid option: $OPTARG requires an argument" 1>&2
-      exit
+      exit 1
       ;;
   esac
 done
 shift $((OPTIND -1))
+
+# Stop if no option arguments were passed
+if [ $OPTIND -eq 1 ]; then
+      echo "invalid option: filecounter requires an argument" 1>&2
+      exit 1
+fi 
 
 
 # create temporary file
