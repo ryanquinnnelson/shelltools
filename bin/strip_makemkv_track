@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+# Purpose
+#
+#   When the MakeMKV tool extracts DVD/Blu-ray titles from disc, it appends a track extension 
+#   (_t00, _t01, etc.). This script removes the track extension from all files in the supplied
+#   directory by renaming them.
+#
+#
+# Usage
+#  
+#   strip_makemkv_track dirname
+#
+#
+#
+# Example
+#
+#   % ls ~/Desktop/example 
+#   >> fileone_t00.m4v	filetwo_t01.m4v
+#
+#   % strip_makemkv_track example
+#   >> Removing track portion for files in example...
+#   >> fileone_t00.m4v -> fileone.m4v
+#   >> filetwo_t01.m4v -> filetwo.m4v
+#   >> Renaming is complete. 
+#
+#   % ls ~/Desktop/example 
+#   >> fileone.m4v	filetwo.m4v
+
+cd "$1"
+echo "Removing track portion for files in $1..."
+
+# Rename all files
+for f in *; do 
+    newname=$(echo "$f" | sed "s/\(_t[0-9][0-9]\)//")
+    mv -- "$f" "$newname"
+    echo "$f -> $newname"
+done
+echo "Renaming is complete."
