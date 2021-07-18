@@ -15,8 +15,8 @@
 # Example
 #
 #   get_video_duration Anime/Tada_Never_Falls_In_Love 
-#   >> Anime/Tada_Never_Falls_In_Love/2018.tv.english.bluray/Tada_Never_Falls_In_Love_S01E08.m4v|Duration                        |0:24:42
-#   >> Anime/Tada_Never_Falls_In_Love/2018.tv.english.bluray/Tada_Never_Falls_In_Love_S01E09.m4v|Duration                        |0:24:42
+#   >> Anime/Tada_Never_Falls_In_Love/2018.tv.english.bluray/Tada_Never_Falls_In_Love_S01E08.m4v|0:24:42
+#   >> Anime/Tada_Never_Falls_In_Love/2018.tv.english.bluray/Tada_Never_Falls_In_Love_S01E09.m4v|0:24:42
 
 
 
