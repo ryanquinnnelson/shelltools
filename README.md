@@ -1,5 +1,5 @@
-# bash-tools
-Collection of scripts developed to showcase a command of Bash scripting or perform useful every tasks
+# shelltools
+Collection of scripts developed to showcase a command of Bash/zsh scripting or perform useful tasks.
 
 #### List of concepts to be included
 - Argument parsing
