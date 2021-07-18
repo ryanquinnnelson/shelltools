@@ -1,0 +1,34 @@
+#!/bin/zsh
+
+# Purpose
+#
+#   This script calculates the duration of each video file in the supplied directory using exiftool. 
+#   The script searches recursively in the directory. The script requires that exiftool is installed.
+#
+#
+# Usage
+#  
+#   get_video_duration dirname
+#
+#
+#
+# Example
+#
+#   get_video_duration Anime/Tada_Never_Falls_In_Love 
+#   >> Anime/Tada_Never_Falls_In_Love/2018.tv.english.bluray/Tada_Never_Falls_In_Love_S01E08.m4v|Duration                        |0:24:42
+#   >> Anime/Tada_Never_Falls_In_Love/2018.tv.english.bluray/Tada_Never_Falls_In_Love_S01E09.m4v|Duration                        |0:24:42
+
+
+
+# Steps
+# 1. Find files that are not hidden or in hidden directories.
+# 2. For each file, print the filename and a vertical bar.
+# 3. Use exiftool to calculate the normal duration.
+# 4. Replace the formatting of exiftool with vertical bar.
+
+cd "$1"
+find "$PWD" -type f -not -path '*/\.*' -exec sh -c \
+"printf \"{}|\"; \
+exiftool \"{}\"  \
+| grep ^Duration \
+| sed 's/: /|/'" \;
