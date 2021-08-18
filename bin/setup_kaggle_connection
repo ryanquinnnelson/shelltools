@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Performs all steps needed to connect a Google Colab notebook to kaggle.
+# Run this file inside the notebook to perform the setup.
+
+printf "Setting up the connection to kaggle...\n"
+
+# Step 1 - Install kaggle
+printf "Installing kaggle...\n"
+pip install kaggle
+printf "kaggle installed.\n"
+
+# Step 2 - Create directories if necessary
+#if [ ! -d "/content/.kaggle" ]; then
+#    printf "Creating /content/.kaggle...\n"
+#    mkdir /content/.kaggle
+#    printf "Directory created.\n"
+#fi
+
+if [ ! -d "/root/.kaggle" ]; then
+    printf "Creating /root/.kaggle...\n"
+    mkdir /root/.kaggle
+    printf "Directory created.\n"
+fi
+
+# Step 3 - Copy API token to correct locations
+printf "Copying kaggle API token to /root...\n"
+cp /content/gdrive/My\ Drive/11685/tokens/kaggle.json /root/.kaggle/
+printf "Token copied.\n"
+
+# Step 4 - Set kaggle config path
+printf "Setting kaggle config path...\n"
+kaggle config set -n path -v /content
+printf "Config path set.\n"
+
+printf "kaggle connection setup complete.\n"
+
